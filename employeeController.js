@@ -1,6 +1,7 @@
 function listAllEmployees(req, res) {
     const { collection } = req.app.locals;
     const { orderBy } = req.query;
+    console.log(req.decoded);
     if (orderBy) {
       const regex = /(.*)(:)(ASC|DESC)/ig;
       if (regex.test(orderBy)) {

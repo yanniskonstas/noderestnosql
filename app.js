@@ -11,8 +11,8 @@ const mongo_uri = `mongodb://${settings.database.host}:${settings.database.port}
 const cors = require('cors');
 app.use(cors());
  
-router.get('/employees', routes.employees.listAllEmployees);
-router.get('/employees/:id', middlewares.ConvertToObjectID,routes.employees.listOneEmployee);
+router.get('/employees', middlewares.authenticate, routes.employees.listAllEmployees);
+router.get('/employees/:id', middlewares.authenticate, middlewares.ConvertToObjectID,routes.employees.listOneEmployee);
 router.post('/employees', jsonParser, routes.employees.createEmployee);
 router.patch('/employees/:id', jsonParser, middlewares.ConvertToObjectID, routes.employees.updateEmployee);
 router.delete('/employees/:id', middlewares.ConvertToObjectID, routes.employees.deleteEmployee);
@@ -22,7 +22,7 @@ router.get('/departments/:deptName/employees', routes.departments.getDepartmentE
 
 app.use('/api', router);
 
-mongo.connect(mongo_uri, { useNewUrlParser: true })
+mongo.connect(mongo_uri, { useNewUrlParser: true, useUnifiedTopology: true })
 .then(client => {
   const db = client.db('project');
   const collection = db.collection('employees');

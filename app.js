@@ -8,8 +8,22 @@ const router = express.Router();
 const app = express();
 const mongo = require('mongodb').MongoClient;
 const mongo_uri = `mongodb://${settings.database.host}:${settings.database.port}`;
+const { ApolloServer } = require('apollo-server-express');
+const schema = require('./schema');
+const resolvers = require('./resolvers');
 const cors = require('cors');
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:8080'
+}));
+
+const server = new ApolloServer({
+  typeDefs: schema,
+  resolvers: resolvers,
+  context: ({ req }) => {
+    return { authHeader: req.headers.authorization }
+  }
+});
+server.applyMiddleware({ app });
  
 router.get('/employees', middlewares.authenticate, routes.employees.listAllEmployees);
 router.get('/employees/:id', middlewares.authenticate, middlewares.ConvertToObjectID,routes.employees.listOneEmployee);

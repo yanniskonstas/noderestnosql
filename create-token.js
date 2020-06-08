@@ -13,7 +13,7 @@ const password = 'password';
 // Assuming that this info is coming from process.env.secret
 // ************************************************************
 const secret = 's3cr3t';
-const expiresIn = 60;
+const expiresIn = 3600;
 // ************************************************************
 
 MongoClient.connect(mongo_uri, { useNewUrlParser: true, useUnifiedTopology: true })

@@ -1,11 +1,7 @@
+require('dotenv').config();
 const ObjectID = require('mongodb').ObjectID;
 const jwt = require('jsonwebtoken');
-
-// ************************************************************
-// Assuming that this info is coming from process.env.secret
-// ************************************************************
-const secret = 's3cr3t';
-// ************************************************************
+const secret = process.env.JWT_SECRET;
 
 function authenticate(req, res, next) {
     const { authorization } = req.headers;

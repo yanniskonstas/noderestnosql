@@ -1,3 +1,4 @@
+require('dotenv').config();
 const MongoClient = require('mongodb').MongoClient;
 const settings = require('./settings');
 const mongo_uri = `mongodb://${settings.database.host}:${settings.database.port}`;
@@ -7,13 +8,11 @@ const jwt = require('jsonwebtoken');
 // ************************************************************
 // Assuming that this info is coming from a form from a web app
 // ************************************************************
-const username = 'yannis';
-const password = 'password';
+const username = process.env.WEBFORM_USERNAME;
+const password = process.env.WEBFORM_PASSWORD;
 // ************************************************************
-// Assuming that this info is coming from process.env.secret
-// ************************************************************
-const secret = 's3cr3t';
-const expiresIn = 3600;
+const secret = process.env.JWT_SECRET;
+const expiresIn = parseInt(process.env.JWT_EXPIRES);
 // ************************************************************
 
 MongoClient.connect(mongo_uri, { useNewUrlParser: true, useUnifiedTopology: true })

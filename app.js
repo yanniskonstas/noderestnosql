@@ -25,7 +25,7 @@ const server = new ApolloServer({
 });
 server.applyMiddleware({ app });
  
-router.get('/employees', middlewares.authenticate, routes.employees.listAllEmployees);
+router.get('/employees', routes.employees.listAllEmployees);
 router.get('/employees/:id', middlewares.authenticate, middlewares.ConvertToObjectID,routes.employees.listOneEmployee);
 router.post('/employees', jsonParser, routes.employees.createEmployee);
 router.patch('/employees/:id', jsonParser, middlewares.ConvertToObjectID, routes.employees.updateEmployee);
